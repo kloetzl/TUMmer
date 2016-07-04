@@ -25,6 +25,7 @@
 #include <assert.h>
 #include <errno.h>
 #include <getopt.h>
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -183,6 +184,28 @@ int main(int argc, char *argv[]) {
 			 "I am truly sorry, but with less than two sequences (%zu given) "
 			 "there is nothing to compare.",
 			 n);
+	}
+
+	// Warn about non ACGT residues.
+	if (FLAGS & F_NON_ACGT) {
+		warnx("The input sequences contained characters other than acgtACGT. "
+			  "These were mapped to N to ensure correct results.");
+	}
+
+	// validate sequence correctness
+	const seq_t *seq = dsa_data(&dsa);
+	for (size_t i = 0; i < n; ++i, ++seq) {
+
+		// The length limit should only apply to the reference
+		const size_t LENGTH_LIMIT = (INT_MAX - 1) / 2;
+		if (seq->len > LENGTH_LIMIT) {
+			errx(1, "The sequence %s is too long. The technical limit is %zu.",
+				 seq->name, LENGTH_LIMIT);
+		}
+
+		if (seq->len == 0) {
+			errx(1, "The sequence %s is empty.", seq->name);
+		}
 	}
 
 	if (FLAGS & F_VERBOSE) {

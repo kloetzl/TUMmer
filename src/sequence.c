@@ -278,7 +278,7 @@ void normalize(seq_t *S) {
 			case 'g':
 			case 't': *q++ = toupper((unsigned char)*p); break;
 			default:
-				*q++ = *p;
+				*q++ = 'N';
 				local_non_acgt = 1;
 				break;
 		}
