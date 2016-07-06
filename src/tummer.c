@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) {
 
 		int option_index = 0;
 
-		c = getopt_long(argc, argv, "bhjrvp:l:", long_options, &option_index);
+		c = getopt_long(argc, argv, "bhjrvp:l:m:", long_options, &option_index);
 
 		if (c == -1) {
 			break;
@@ -133,6 +133,22 @@ int main(int argc, char *argv[]) {
 
 				MIN_LENGTH = length;
 				break;
+			}
+			case 'm': {
+				// legacy MUMmer options
+				if (strcmp("umcand", optarg) == 0 ||
+					strcmp("umreference", optarg) == 0) {
+					warnx("TUMmer only supports -mumcand and -mumreference. "
+						  "Ignoring argument.");
+					break;
+				}
+
+				if (strcmp("um", optarg) == 0 ||
+					strcmp("axmatch", optarg) == 0) {
+					errx(1, "Mode -m%s is unsupported by TUMmer.", optarg);
+				}
+
+				errx(1, "Unknown argument -m%s", optarg);
 			}
 			case '?': /* intentional fall-through */
 			default: usage(); break;
