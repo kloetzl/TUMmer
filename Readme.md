@@ -1,8 +1,6 @@
 # TUMmer
 
-TUMmer is a drop-in replacement for MUMmer, being ten times faster on whole genomes. It is based on an enhanced suffix array instead of a suffix array. This makes it much faster, but also requires more memory.
-
-TUMmer does not find all MUMs which overlap in the query. However, these only account for three percent of all MUMs and thus should not affect your analysis.
+TUMmer is a drop-in replacement for MUMmer, being ten times faster on whole genomes. It is based on an enhanced suffix array instead of a suffix array. This makes it much faster, but also requires more memory. The detection of MUMs is limited to MUM candidates, i.e. matches which are only unique in the subject. Furthermore, TUMmer does not find all MUMs which overlap in the query. However, these only account for three percent of all MUMs and thus should not affect your analysis.
 
 
 # Installation
@@ -39,6 +37,12 @@ The following options (some with the same functionality as in MUMmer) are suppor
 `-v`, `--verbose` Prints additional information  
 `-h`, `--help` Display help and exit  
 `--version` Output version information  
+
+The options `-l` and `-p` are mutually exclusive. The later of the provided arguments is used.
+
+## Multi-threading
+
+Multi-threading is currently not supported but can easily be implemented. I will do so, if there is demand for it.
 
 
 # License
