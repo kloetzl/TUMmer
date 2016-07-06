@@ -1,8 +1,8 @@
 # TUMmer
 
-TUMmer is a drop-in replacement for MUMmer, being ten times faster on whole genomes.
+TUMmer is a drop-in replacement for MUMmer, being ten times faster on whole genomes. It is based on an enhanced suffix array instead of a suffix array. This makes it much faster, but also requires more memory.
 
-TUMmer does not find MUMs which overlap in the query. However, these only account for three percent of all MUMs and thus should not affect your analysis.
+TUMmer does not find all MUMs which overlap in the query. However, these only account for three percent of all MUMs and thus should not affect your analysis.
 
 
 # Installation
@@ -15,6 +15,30 @@ Building is as easy as follows.
     $ ./configure
     $ make
     $ make install
+
+
+# Usage
+
+TUMmer follows Unix calling conventions:
+
+    $ tummer foo.fasta
+    > AE005674
+       1         1        57
+      65        65       165
+     244       226       166
+     411       393       165
+     577       559        28
+
+The following options (some with the same functionality as in MUMmer) are supported:
+
+`-b` Compute forward and revere complement matches; default: forward only  
+`-j`, `--join` Treat all sequences from one file as a single genome. This might render the position field of the output useless.  
+`-l`, `--min-length <INT>` Minimum length of a MUM; uses p-value by default  
+`-p <FLOAT>` Significance of a MUM; default: 0.05  
+`-r` Compute only reverse complement matches; default: forward only  
+`-v`, `--verbose` Prints additional information  
+`-h`, `--help` Display help and exit  
+`--version` Output version information  
 
 
 # License
